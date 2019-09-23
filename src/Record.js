@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "@reach/router";
 
 export const Record = ({record}) => {
 
@@ -16,7 +17,7 @@ export const Record = ({record}) => {
 
     return (
     <div>
-        <div>{record.firstName} {record.lastName}, <i>{record.occupation}</i></div>
+        <div><Link to={"/details/" + record.id}>{record.firstName} {record.lastName}</Link>, <i>{record.occupation}</i></div>
         <div>Ht: {record.height} inches tall, Wt: {record.weight} lb</div>
         <div>Born: {record.dob} <i>({generateAgeFromDOB(record.dob)} years old)</i></div>
         <br />
