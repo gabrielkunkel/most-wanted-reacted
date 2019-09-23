@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from '@reach/router';
 import { data } from './data';
 
@@ -10,6 +10,11 @@ export const Details = ({ id }) => {
   function getRecord(id) {
     return data.filter(person => parseInt(id) === person.id).pop();
   }
+
+  useEffect(() => {
+
+    console.log("Record", id);
+  });
 
   function findDescendants(searchPerson, people = data) {
     let filteredPeople = people
@@ -100,6 +105,7 @@ export const Details = ({ id }) => {
     <div>
       <div>First Name: {record.firstName}</div>
       <div>Last Name: {record.lastName}</div>
+      <div>ID: {record.id}</div>
       <div>Date of Birth: {record.dob} <i> ({generateAgeFromDOB(record.dob)} years old)</i> </div>
       <div>Height: {record.height}</div>
       <div>Descendants: {descendants.length < 1 ? <span><i>No Descendants</i></span> :
@@ -120,3 +126,5 @@ export const Details = ({ id }) => {
     </div>
   )
 }
+
+export default Details;

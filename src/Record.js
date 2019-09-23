@@ -1,7 +1,12 @@
 import React from "react";
-import { Link } from "@reach/router";
+//import { Link } from "@reach/router";
 
-export const Record = ({ record }) => {
+
+
+export const Record = ({ record, updateSelectedPerson }) => {
+
+
+
 
   function generateAgeFromDOB(dob) {
     let today = new Date();
@@ -17,7 +22,7 @@ export const Record = ({ record }) => {
 
   return (
     <div className="record">
-      <div><Link to={"/details/" + record.id}>{record.firstName} {record.lastName}</Link>, <i>{record.occupation}</i></div>
+      <div onClick={() => updateSelectedPerson(record.id)}><span className="name">{record.firstName} {record.lastName}</span>, <i>{record.occupation}</i></div>
       <div>Ht: {record.height} inches tall, Wt: {record.weight} lb</div>
       <div>Born: {record.dob} <i>({generateAgeFromDOB(record.dob)} years old)</i></div>
       <br />
