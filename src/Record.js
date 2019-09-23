@@ -2,9 +2,25 @@ import React from "react";
 
 export const Record = ({record}) => {
 
-    return (<div>
-        <div>This is some info about {record.firstName}</div>
+    function generateAgeFromDOB(dob) {
+        let today = new Date();
+        let birthDate = new Date(dob);
+        let age = today.getFullYear() - birthDate.getFullYear();
+        let month = today.getMonth() - birthDate.getMonth();
+        if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+          age -= 1;
+        }
+      
+        return age;
+      }
 
-    </div>)
+    return (
+    <div>
+        <div>{record.firstName} {record.lastName}, <i>{record.occupation}</i></div>
+        <div>Ht: {record.height} inches tall, Wt: {record.weight} lb</div>
+        <div>Born: {record.dob} <i>({generateAgeFromDOB(record.dob)} years old)</i></div>
+        <br />
+    </div>
+    )
 
 }
