@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import './App.css';
 import { data } from './data';
+import { Record } from './Record'
 
 
 function App() {
@@ -40,6 +41,8 @@ function App() {
       </form>
 
       <br />
+
+    {displayDatabase.map(person => <Record record={person} key={person.id} />)}
 
     </div>
   );
