@@ -1,12 +1,8 @@
 import React from "react";
-//import { Link } from "@reach/router";
 
 
 
 export const Record = ({ record, updateSelectedPerson }) => {
-
-
-
 
   function generateAgeFromDOB(dob) {
     let today = new Date();

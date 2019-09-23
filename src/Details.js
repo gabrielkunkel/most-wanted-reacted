@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from 'react';
-//import { Link } from '@reach/router';
+import React, { useEffect } from 'react';
 import { data } from './data';
 
-export const Details = ({ id }) => {
-  const [record, setRecord] = useState(getRecord(id));
-  const [descendants, setDescendants] = useState(findDescendants(record));
-  const [immediateFamily, setImmediateFamily] = useState(findImmediateFamily(record));
+export const Details = ({ id, record, updateRecord }) => {
+    let immediateFamily = [], descendants = [];
 
-  function getRecord(id) {
-    return data.filter(person => parseInt(id) === person.id).pop();
-  }
+  updateValues(id);
 
   useEffect(() => {
     console.log("Record", id);
   }, [id]);
+
+  function getRecord(id) {
+    return data.filter(person => parseInt(id) === person.id).pop();
+  }
 
   function findDescendants(searchPerson, people = data) {
     let filteredPeople = people
@@ -31,19 +30,13 @@ export const Details = ({ id }) => {
     return filteredPeople;
   }
 
+function updateValues(id) {
+    let newRecord = getRecord(id);
+    descendants = findDescendants(newRecord);
+    immediateFamily = findImmediateFamily(newRecord);
 
-  function updateValues(newId) {
-    let newRecord = getRecord(newId);
-    let newDescendants = findDescendants(newRecord);
-    let newImmediateFamily = findImmediateFamily(newRecord);
-
-    setRecord(newRecord);
-    setDescendants(newDescendants);
-    setImmediateFamily(newImmediateFamily);
-  }
-
-
-  //IMMIDEATE FAMILY 
+    updateRecord(newRecord);
+}
 
   function findImmediateFamily(searchPerson, people = data) {
     let siblings = [];
@@ -85,7 +78,6 @@ export const Details = ({ id }) => {
 
   }
 
-  ////////////
   function generateAgeFromDOB(dob) {
     let today = new Date();
     let birthDate = new Date(dob);

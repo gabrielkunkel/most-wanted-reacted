@@ -9,6 +9,7 @@ function App() {
   const [displayDatabase, setDisplayDatabase] = useState([]);
   const [searchObject, setSearchObject] = useState({});
   const [selectedPerson, setSelectedPerson] = useState();
+  const [record, setRecord] = useState({});
 
   const filterFromDatabase = () => {
     let searchResults = [...data];
@@ -24,10 +25,11 @@ function App() {
 
 
   function updateSelectedPerson(id) {
-
     setSelectedPerson(id);
+  }
 
-
+  function updateRecord(record) {
+    setRecord(record);
   }
 
 
@@ -78,7 +80,7 @@ function App() {
           </div>
           <div className="col-lg-6 col-md-6 col-sm-12" id="details">
             <h1>Details</h1>
-            {!selectedPerson ? <div></div> : <Details id={selectedPerson} />}
+            {!selectedPerson ? <div></div> : <Details id={selectedPerson} record={record} updateRecord={updateRecord} />}
 
           </div>
         </div>
