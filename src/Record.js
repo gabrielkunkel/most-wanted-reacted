@@ -21,8 +21,8 @@ export const Record = ({ record, updateSelectedPerson }) => {
   }
 
   return (
-    <div className="record">
-      <div onClick={() => updateSelectedPerson(record.id)}><span className="name">{record.firstName} {record.lastName}</span>, <i>{record.occupation}</i></div>
+    <div className="record" onClick={() => updateSelectedPerson(record.id)}>
+      <div> <span className="name">{record.firstName} {record.lastName}</span>, <i>{record.occupation}</i></div>
       <div>Ht: {record.height} inches tall, Wt: {record.weight} lb</div>
       <div>Born: {record.dob} <i>({generateAgeFromDOB(record.dob)} years old)</i></div>
       <br />

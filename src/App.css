@@ -2,7 +2,10 @@
   text-align: center;
 }
 
-
+input {
+  padding-bottom: 2px;
+  margin-bottom: 2px;
+}
 
 
 body{
@@ -54,4 +57,8 @@ cursor: pointer;
 
 .name{
   font-weight: bold;
+}
+
+.linkSpan{
+  color: purple;
 }

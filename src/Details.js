@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from '@reach/router';
+//import { Link } from '@reach/router';
 import { data } from './data';
 
 export const Details = ({ id }) => {
@@ -12,9 +12,8 @@ export const Details = ({ id }) => {
   }
 
   useEffect(() => {
-
     console.log("Record", id);
-  });
+  }, [id]);
 
   function findDescendants(searchPerson, people = data) {
     let filteredPeople = people
@@ -103,26 +102,27 @@ export const Details = ({ id }) => {
 
   return (
     <div>
-      <div>First Name: {record.firstName}</div>
-      <div>Last Name: {record.lastName}</div>
-      <div>ID: {record.id}</div>
-      <div>Date of Birth: {record.dob} <i> ({generateAgeFromDOB(record.dob)} years old)</i> </div>
-      <div>Height: {record.height}</div>
-      <div>Descendants: {descendants.length < 1 ? <span><i>No Descendants</i></span> :
-        descendants.map(descendant => {
-          return (<span key={descendant.id}>
-            <Link to={`/details/${descendant.id}`} onClick={() => updateValues(descendant.id)}> {descendant.firstName} {descendant.lastName} </Link>,
+      <div className="record">
+        <div><span className="name">First Name:</span> {record.firstName}</div>
+        <div><span className="name">Last Name:</span> {record.lastName}</div>
+        <div><span className="name">ID:</span> {record.id}</div>
+        <div><span className="name">Date of Birth:</span> {record.dob} <i> ({generateAgeFromDOB(record.dob)} years old)</i> </div>
+        <div><span className="name">Height:</span> {record.height}</div>
+        <div><span className="name">Descendants:</span> {descendants.length < 1 ? <span><i>No Descendants</i></span> :
+          descendants.map(descendant => {
+            return (<span key={descendant.id}>
+              <span className="linkSpan" onClick={() => updateValues(descendant.id)}> {descendant.firstName} {descendant.lastName} </span>,
                         </span>)
-        })}
-      </div>
-      <div>Immediate Family: {immediateFamily.length < 1 ? <span><i>No Family</i></span> :
-        immediateFamily.map(family => {
-          return (<span key={family.id}>
-            <Link to={`/details/${family.id}`} onClick={() => updateValues(family.id)}>{family.firstName} {family.lastName}</Link><i>({family.relation}) </i>,
+          })}
+        </div>
+        <div><span className="name">Immediate Family:</span> {immediateFamily.length < 1 ? <span><i>No Family</i></span> :
+          immediateFamily.map(family => {
+            return (<span key={family.id}>
+              <span className="linkSpan" onClick={() => updateValues(family.id)}> {family.firstName} {family.lastName}</span><i>({family.relation}) </i> ,
                         </span>)
-        })}
+          })}
+        </div>
       </div>
-
     </div>
   )
 }
