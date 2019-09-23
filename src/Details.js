@@ -82,6 +82,17 @@ export const Details = ({ id }) => {
   }
 
   ////////////
+  function generateAgeFromDOB(dob) {
+    let today = new Date();
+    let birthDate = new Date(dob);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    let month = today.getMonth() - birthDate.getMonth();
+    if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+      age -= 1;
+    }
+
+    return age;
+  }
 
 
 
@@ -89,19 +100,19 @@ export const Details = ({ id }) => {
     <div>
       <div>First Name: {record.firstName}</div>
       <div>Last Name: {record.lastName}</div>
-      <div>Date of Birth: {record.dob}</div>
+      <div>Date of Birth: {record.dob} <i> ({generateAgeFromDOB(record.dob)} years old)</i> </div>
       <div>Height: {record.height}</div>
       <div>Descendants: {descendants.length < 1 ? <span><i>No Descendants</i></span> :
         descendants.map(descendant => {
           return (<span key={descendant.id}>
-            <Link to={`/details/${descendant.id}`} onClick={() => updateValues(descendant.id)}>{descendant.firstName} {descendant.lastName}</Link>,
+            <Link to={`/details/${descendant.id}`} onClick={() => updateValues(descendant.id)}> {descendant.firstName} {descendant.lastName} </Link>,
                         </span>)
         })}
       </div>
       <div>Immediate Family: {immediateFamily.length < 1 ? <span><i>No Family</i></span> :
         immediateFamily.map(family => {
           return (<span key={family.id}>
-            <Link to={`/details/${family.id}`} onClick={() => updateValues(family.id)}>{family.firstName} {family.lastName} {family.relation}</Link>,
+            <Link to={`/details/${family.id}`} onClick={() => updateValues(family.id)}>{family.firstName} {family.lastName}</Link><i>({family.relation}) </i>,
                         </span>)
         })}
       </div>
