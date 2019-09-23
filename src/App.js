@@ -7,6 +7,22 @@ function App() {
   const [displayDatabase, setDisplayDatabase] = useState([]);
   const [searchObject, setSearchObject] = useState({});
 
+  const filterFromDatabase = () => {
+    let searchResults = [...data];
+
+      for (const key in searchObject) {
+        if (searchObject[key]) {
+          searchResults = searchResults.filter(element => element[key] === searchObject[key]);
+        }
+      }
+
+    setDisplayDatabase(searchResults);
+  }
+
+  const mergeSearchObject = (obj) => {
+    let searchObjectUpdated = Object.assign({}, searchObject, obj);
+    setSearchObject(searchObjectUpdated);
+  }
 
   return (
     <div className="App">
