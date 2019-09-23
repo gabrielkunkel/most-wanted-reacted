@@ -76,12 +76,9 @@ export const Details = ({ id }) => {
 
     let familyTotal = [].concat(parents, siblings, spouse);
 
-    if (familyTotal.length === 0) {
 
-      return false;
-    } else {
-      return familyTotal;
-    }
+    return familyTotal;
+
   }
 
   ////////////
