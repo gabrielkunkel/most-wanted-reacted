@@ -10,6 +10,7 @@ function App() {
   const [searchObject, setSearchObject] = useState({});
   const [selectedPerson, setSelectedPerson] = useState();
   const [record, setRecord] = useState({});
+  const [validForm, setValidForm] = useState('');
 
   const filterFromDatabase = () => {
     let searchResults = [...data];
@@ -32,8 +33,6 @@ function App() {
     setRecord(record);
   }
 
-
-
   ////// CAPITALIZE FIRST LETTER // VALIDATION?
   const capitalizeFirstLetter = (string) => {
     let letters = string.split("");
@@ -48,9 +47,24 @@ function App() {
     return newWord;
   }
   ///////////////
+
   const mergeSearchObject = (obj) => {
     let searchObjectUpdated = Object.assign({}, searchObject, obj);
     setSearchObject(searchObjectUpdated);
+  }
+
+  const mergeValidation = (obj, reg, name) => {
+    for (const key in obj) {
+        if (!reg.test(obj[key])) {
+          setValidForm(name);
+          if (obj[key] === '' || null || NaN || undefined) {
+            setValidForm('');
+          }
+        } else {
+          setValidForm('');
+        }
+        mergeSearchObject(obj)
+    }
   }
 
   return (
@@ -66,15 +80,16 @@ function App() {
               event.preventDefault();
               filterFromDatabase();
             }}>
-              <div><input id="firstName" placeholder="First Name" onChange={e => mergeSearchObject({ firstName: capitalizeFirstLetter(e.target.value) })} /></div>
-              <div><input id="lastName" placeholder="Last Name" onChange={e => mergeSearchObject({ lastName: capitalizeFirstLetter(e.target.value) })} /></div>
-              <div><input id="eyeColor" placeholder="Eye Color" onChange={e => mergeSearchObject({ eyeColor: e.target.value })} /></div>
-              <div><input id="gender" placeholder="Gender" onChange={e => mergeSearchObject({ gender: e.target.value })} /></div>
-              <div><input id="occupation" placeholder="Occupation" onChange={e => mergeSearchObject({ occupation: e.target.value })} /></div>
-              <div><input id="height" placeholder="Height" onChange={e => mergeSearchObject({ height: parseInt(e.target.value) })} /></div>
-              <div><input id="weight" placeholder="Weight" onChange={e => mergeSearchObject({ weight: parseInt(e.target.value) })} /></div>
+              <div><input id="firstName" placeholder="First Name" onChange={e => mergeValidation({ firstName: capitalizeFirstLetter(e.target.value) }, /^[a-zA-Z]+$/, "First Name")} /></div>
+              <div><input id="lastName" placeholder="Last Name" onChange={e => mergeValidation({ lastName: capitalizeFirstLetter(e.target.value) }, /^[a-zA-Z]+$/, "Last Name")} /></div>
+              <div><input id="eyeColor" placeholder="Eye Color" onChange={e => mergeValidation({ eyeColor: e.target.value }, /^[a-zA-Z]+$/, "Eye Color")} /></div>
+              <div><input id="gender" placeholder="Gender" onChange={e => mergeValidation({ gender: e.target.value }, /^[a-zA-Z]+$/, "Gender")} /></div>
+              <div><input id="occupation" placeholder="Occupation" onChange={e => mergeValidation({ occupation: e.target.value }, /^[a-zA-Z]+$/, "Occupation")} /></div>
+              <div><input id="height" placeholder="Height" onChange={e => mergeValidation({ height: parseInt(e.target.value) }, /^[0-9]+$/, "Height")} /></div>
+              <div><input id="weight" placeholder="Weight" onChange={e => mergeSearchObject({ weight: parseInt(e.target.value) }, /^[0-9]+$/, "Weight")} /></div>
               <button>Search</button>
             </form>
+            {!validForm ? <div></div> : <div>Invalid {validForm} input!</div>}
             <br />
             {displayDatabase.map(person => <Record record={person} key={person.id} updateSelectedPerson={updateSelectedPerson} />)}
           </div>
